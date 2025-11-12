@@ -8,7 +8,7 @@ and manage data locally using `localStorage`. The app runs entirely in the brows
 
 Features
 
-Default Code Provided**
+Default Code Provided
 - Add habits and display them in a weekly view.
 - Toggle completion for each day.
 - Calculate streaks.
@@ -17,7 +17,7 @@ Default Code Provided**
 - Reset all data if so desire
 
 
-My Enhancements**
+My Enhancements
 - **Calendar View with Month Navigation**  
   Visual overview of habits across the month with color-coded indicators.
 - **Habit Filter in Calendar**  
@@ -29,6 +29,7 @@ My Enhancements**
 - **Data Management Tools**  
   Export/Import habits as JSON and reset all data.
 
+```
 habit-tracker/
 ├── index.html             # Main HTML file
 │   └──  styles.css        # CSS styles
@@ -40,6 +41,7 @@ habit-tracker/
 │    ├── Habit Tracker.png                      # Example of the functional page
 │    ├── Starting with html code.png            # Ready code that was provided for us ready for work
 └── README.md              # Project documentation
+```
 
 ---
 
@@ -57,9 +59,10 @@ git clone https://github.com/stefanbeatovic/habit-tracker
 
 
 Screenshots are found in the separate folder of the process. 
+!(screenshots/Adding functions to .js file.png)
 
 
-📝 Reflection (200–300 words)
+Reflection
 Building this Habit Tracker was an insightful experience that strengthened my understanding of DOM manipulation, state management, and localStorage. 
 Initially, the provided code offered a simple weekly habit view, which was functional but limited. My goal was to enhance usability and visualization 
 without breaking the original structure.
