@@ -131,12 +131,12 @@ Score: 3/3
 (Complete and clear documentation.)
 
 #### F. Deployment (3 points)
-✔ Project deployed on GitHub Pages with working live URL and repository link in README.
+- Project deployed on GitHub Pages with working live URL and repository link in README.
 Score: 3/3
 (Live and tidy deployment.)
 
 #### G. Demo Video & Git Documentation (5 points)
-✖ Video not yet provided; timestamps missing.
+- Video not yet provided; timestamps missing.
 Score: 0/5
 (Pending video submission.)
 
