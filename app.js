@@ -278,24 +278,25 @@ render();
    Calendar View + Habit Colors + Dark Mode Toggle
 =========================== */
 
-const calendarGrid = document.getElementById("calendar-grid");
-const monthYearDisplay = document.getElementById("calendar-month-year");
-const prevMonthBtn = document.getElementById("prev-month");
-const nextMonthBtn = document.getElementById("next-month");
-const habitFilterContainer = document.getElementById("habit-filter");
+// DOM references for calendar and filter UI
+const calendarGrid = document.getElementById("calendar-grid"); // Container for calendar days
+const monthYearDisplay = document.getElementById("calendar-month-year"); // Displays current month/year
+const prevMonthBtn = document.getElementById("prev-month"); // Button to go to previous month
+const nextMonthBtn = document.getElementById("next-month"); // Button to go to next month
+const habitFilterContainer = document.getElementById("habit-filter"); // Container for habit filter checkboxes
 
+// Track current month/year and selected habits for filtering
 let currentDate = new Date();
-let selectedHabits = new Set();
+let selectedHabits = new Set(); // Stores habits chosen by user for filtering in calendar view
 
-// Predefined color palette for habits
+// Predefined color palette for habits (used for visual distinction in calendar)
 const habitColors = [
-  "#4CAF50", "#2196F3", "#FF9800", "#9C27B0", "#E91E63", "#3F51B5", "#009688", "#FFC107" // Distinct colors for different habits so they would be easily distinguishable in the calendar view
+  "#4CAF50", "#2196F3", "#FF9800", "#9C27B0", "#E91E63", "#3F51B5", "#009688", "#FFC107"
 ];
-const habitColorMap = {}; // will assign a unique color to each habit randomly from the palette
+const habitColorMap = {}; // Maps each habit to a unique color from the palette
 
-/* ---------------------------
-   Load habit data
---------------------------- */
+/* Load habit data from localStorage
+   Returns an array of { habit, date } for completed days */
 function loadHabitData() {
   const state = JSON.parse(localStorage.getItem("habitTrackerState") || "{}");
 
@@ -303,6 +304,7 @@ function loadHabitData() {
 
   const result = [];
 
+  // Loop through habits and collect completed dates
   state.habits.forEach(habit => {
     if (habit.log && typeof habit.log === "object") {
       Object.entries(habit.log).forEach(([date, completed]) => {
@@ -316,23 +318,23 @@ function loadHabitData() {
   return result;
 }
 
-/* ---------------------------
-   Get all unique habits and assign colors
---------------------------- */
+/* Get all unique habits and assign colors */
 function getAllHabits(data) {
   const habits = new Set(data.map(entry => entry.habit));
   const all = Array.from(habits);
+
+  // Assign colors from palette to each habit
   all.forEach((habit, i) => {
     if (!habitColorMap[habit]) {
       habitColorMap[habit] = habitColors[i % habitColors.length];
     }
   });
+
   return all;
 }
 
-/* ---------------------------
-   Render habit filter checkboxes
---------------------------- */
+/* Render habit filter checkboxes
+   Allows user to filter calendar by selected habits */
 function renderHabitFilter() {
   const data = loadHabitData();
   const habits = getAllHabits(data);
@@ -343,6 +345,7 @@ function renderHabitFilter() {
     return;
   }
 
+  // Create checkbox + color dot for each habit
   habits.forEach(habit => {
     const label = document.createElement("label");
     label.style.display = "inline-flex";
@@ -361,6 +364,7 @@ function renderHabitFilter() {
     colorDot.style.borderRadius = "50%";
     colorDot.style.backgroundColor = habitColorMap[habit];
 
+    // Update selected habits and re-render calendar on change
     checkbox.addEventListener("change", (e) => {
       if (e.target.checked) {
         selectedHabits.add(habit);
@@ -377,9 +381,8 @@ function renderHabitFilter() {
   });
 }
 
-/* ---------------------------
-   Render calendar
---------------------------- */
+/* Render calendar view
+   Displays days of current month with habit completion indicators */
 function renderCalendar() {
   const year = currentDate.getFullYear();
   const month = currentDate.getMonth();
@@ -388,10 +391,11 @@ function renderCalendar() {
   const lastDay = new Date(year, month + 1, 0);
   const prevLastDay = new Date(year, month, 0);
 
-  const prevDays = firstDay.getDay();
-  const totalDays = lastDay.getDate();
-  const nextDays = 6 - lastDay.getDay();
+  const prevDays = firstDay.getDay(); // Days from previous month to fill grid
+  const totalDays = lastDay.getDate(); // Total days in current month
+  const nextDays = 6 - lastDay.getDay(); // Days from next month to fill grid
 
+  // Update month/year display
   monthYearDisplay.textContent = currentDate.toLocaleString("default", {
     month: "long",
     year: "numeric"
@@ -399,19 +403,22 @@ function renderCalendar() {
 
   calendarGrid.innerHTML = "";
 
+  // Load habit completion data
   const habitCompletions = loadHabitData();
 
+  // Apply filter if habits are selected
   const filtered = selectedHabits.size > 0
     ? habitCompletions.filter(entry => selectedHabits.has(entry.habit))
     : habitCompletions;
 
+  // Map dates to habits completed on that day
   const dayMap = {};
   filtered.forEach(entry => {
     if (!dayMap[entry.date]) dayMap[entry.date] = [];
     dayMap[entry.date].push(entry.habit);
   });
 
-  // Helper to build a day cell
+  // Helper: Create a day cell with habit color dots
   const makeDay = (dayNum, isOtherMonth = false) => {
     const day = document.createElement("div");
     day.classList.add("calendar-day");
@@ -422,6 +429,7 @@ function renderCalendar() {
 
     day.textContent = dayNum;
 
+    // Add color dots for habits completed on this day
     if (habitsOnDay) {
       habitsOnDay.forEach(habit => {
         const colorDot = document.createElement("span");
@@ -438,25 +446,23 @@ function renderCalendar() {
     calendarGrid.appendChild(day);
   };
 
-  // Previous month days
+  // Render previous month days
   for (let x = prevDays; x > 0; x--) {
     makeDay(prevLastDay.getDate() - x + 1, true);
   }
 
-  // Current month days
+  // Render current month days
   for (let i = 1; i <= totalDays; i++) {
     makeDay(i);
   }
 
-  // Next month days
+  // Render next month days
   for (let j = 1; j <= nextDays; j++) {
     makeDay(j, true);
   }
 }
 
-/* ---------------------------
-   Month navigation
---------------------------- */
+/* Month navigation buttons */
 prevMonthBtn.addEventListener("click", () => {
   currentDate.setMonth(currentDate.getMonth() - 1);
   renderCalendar();
@@ -467,28 +473,25 @@ nextMonthBtn.addEventListener("click", () => {
   renderCalendar();
 });
 
-/* ---------------------------
-   Initialize
---------------------------- */
+/* Initialize calendar and filter on page load */
 renderHabitFilter();
 renderCalendar();
 
-/* ====================================================
-   DARK MODE TOGGLE BUTTON
-==================================================== */
+/* DARK MODE TOGGLE BUTTON
+   Adds a floating button to toggle dark mode and saves preference */
 const darkModeBtn = document.createElement("button");
-darkModeBtn.textContent = "🌙";
+darkModeBtn.textContent = "🌙"; // Moon icon for dark mode
 darkModeBtn.id = "dark-mode-toggle";
 document.body.appendChild(darkModeBtn);
 
-// Toggle logic
+// Toggle dark mode and update button icon
 darkModeBtn.addEventListener("click", () => {
   document.body.classList.toggle("dark-mode");
   darkModeBtn.textContent = document.body.classList.contains("dark-mode") ? "☀️" : "🌙";
   localStorage.setItem("darkMode", document.body.classList.contains("dark-mode"));
 });
 
-// Remember mode
+// Restore dark mode state from localStorage on page load
 if (localStorage.getItem("darkMode") === "true") {
   document.body.classList.add("dark-mode");
   darkModeBtn.textContent = "☀️";

@@ -1,34 +1,44 @@
-:root{ /* Root selector for global variables */
-  --brand-1:orange; /* Primary blue colour */
-  --brand-2:#f2ff00; /* Lighter blue */
-  --ink:#0b3b58; /* Dark text */
-  --muted:#66788a; /* Light text */
-  --ring:#e1ff00; /* Focus outline */
+/* ===========================
+   Global Variables & Resets
+=========================== */
+:root { /* Define reusable color variables for branding and UI */
+  --brand-1: orange;      /* Primary accent color */
+  --brand-2: #f2ff00;     /* Secondary accent color */
+  --ink: #0b3b58;         /* Dark text color */
+  --muted: #66788a;       /* Muted text color */
+  --ring: #e1ff00;        /* Focus outline color */
 }
-*{box-sizing:border-box} /* All elements include padding/border in width/height */
-html,body{height:100%} /* Full height for layout */
-body{
-  margin:0; /* Remove default margin */
-  font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; /* Modern font stack */
-  background:#f0f4f8; /* Light background */
-  color:#333; /* Default text colour */
-  line-height:1.6; /* Better readability */
+
+* { box-sizing: border-box; } /* Include padding/border in element dimensions */
+html, body { height: 100%; }  /* Ensure full height layout */
+
+body {
+  margin: 0; /* Remove default margin */
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; /* Modern font stack */
+  background: #f0f4f8; /* Light background for main layout */
+  color: #333; /* Default text color */
+  line-height: 1.6; /* Improve readability */
 }
-button:focus, input:focus{outline:3px solid var(--ring); outline-offset:2px} /* Blue focus ring for keyboard users */
-/* Additional: Focus styles ensure accessibility for keyboard navigation */
 
-/* Calendar View Styles */
+/* Focus styles for accessibility */
+button:focus, input:focus {
+  outline: 3px solid var(--ring);
+  outline-offset: 2px;
+}
 
+/* ===========================
+   Calendar View Styles
+=========================== */
 .calendar-container {
   margin-top: 0rem;
-  background-color: #fff;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  padding: 1.5rem;
+  background-color: #fff; /* White background for calendar box */
+  border-radius: 12px;    /* Rounded corners */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+  padding: 1.5rem;        /* Inner spacing */
 }
 
 .calendar-header {
-  display: flex;
+  display: flex; /* Align title and buttons horizontally */
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1rem;
@@ -36,11 +46,12 @@ button:focus, input:focus{outline:3px solid var(--ring); outline-offset:2px} /* 
 
 .calendar-header h3 {
   font-size: 1.25rem;
-  color: #333;
+  color: #333; /* Dark text for header */
 }
 
+/* Navigation buttons for calendar */
 .calendar-btn {
-  background-color: #4CAF50;
+  background-color: #4CAF50; /* Green button */
   color: white;
   border: none;
   border-radius: 6px;
@@ -50,18 +61,20 @@ button:focus, input:focus{outline:3px solid var(--ring); outline-offset:2px} /* 
 }
 
 .calendar-btn:hover {
-  background-color: #45a049;
+  background-color: #45a049; /* Slightly darker green on hover */
 }
 
+/* Grid layout for days */
 .calendar-grid {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(7, 1fr); /* 7 columns for days of the week */
   gap: 0.5rem;
   text-align: center;
 }
 
+/* Individual day cells */
 .calendar-day {
-  background-color: #f9f9f9;
+  background-color: #f9f9f9; /* Light gray background */
   padding: 0.75rem;
   border-radius: 8px;
   font-size: 0.9rem;
@@ -69,20 +82,21 @@ button:focus, input:focus{outline:3px solid var(--ring); outline-offset:2px} /* 
   transition: background-color 0.3s ease;
 }
 
+/* Completed day styling */
 .calendar-day.completed {
-  background-color: #a5d6a7;
-  color: #2e7d32;
+  background-color: #a5d6a7; /* Green shade for completed */
+  color: #2e7d32; /* Dark green text */
   font-weight: bold;
 }
 
+/* Days from previous/next month */
 .calendar-day.other-month {
-  opacity: 0.4;
+  opacity: 0.3; /* Dimmed for non-current month */
 }
 
 /* ===========================
    Habit Filter Section
 =========================== */
-
 .habit-filter {
   display: flex;
   flex-wrap: wrap;
@@ -93,7 +107,7 @@ button:focus, input:focus{outline:3px solid var(--ring); outline-offset:2px} /* 
 .habit-filter label {
   display: flex;
   align-items: center;
-  background-color: #f2f2f2;
+  background-color: #f2f2f2; /* Light gray background for filter labels */
   border-radius: 6px;
   padding: 0.4rem 0.8rem;
   cursor: pointer;
@@ -105,7 +119,7 @@ button:focus, input:focus{outline:3px solid var(--ring); outline-offset:2px} /* 
 }
 
 .habit-filter label:hover {
-  background-color: #e6e6e6;
+  background-color: #e6e6e6; /* Slightly darker on hover */
 }
 
 /* ===========================
@@ -115,7 +129,7 @@ button:focus, input:focus{outline:3px solid var(--ring); outline-offset:2px} /* 
   position: fixed;
   bottom: 20px;
   right: 20px;
-  background: #333;
+  background: #333; /* Dark button */
   color: white;
   border: none;
   border-radius: 50%;
@@ -128,32 +142,34 @@ button:focus, input:focus{outline:3px solid var(--ring); outline-offset:2px} /* 
 }
 
 #dark-mode-toggle:hover {
-  background: #555;
-  transform: scale(1.1);
+  background: whitesmoke; /* Light hover effect */
+  transform: scale(1.1); /* Slight zoom on hover */
 }
 
 /* ===========================
-   Dark Mode Theme
+   Dark Mode Theme Overrides
 =========================== */
 body.dark-mode {
-  background-color: #121212;
-  color: #e0e0e0; /* Letter colors */
+  background-color: #121212; /* Dark background */
+  color: #e0e0e0; /* Light text for readability */
 }
 
+/* Calendar cells in dark mode */
 body.dark-mode .calendar-day {
-  background-color: #1e1e1e;
+  background-color: #1e1e1e; /* Dark gray cells */
   border-color: #333;
 }
 
 body.dark-mode .calendar-day.other-month {
-  opacity: 0.5;
+  opacity: 0.2; /* Dimmed for non-current month */
 }
 
+/* Calendar header text in dark mode */
 body.dark-mode #calendar-month-year {
   color: black;
 }
 
+/* Labels in dark mode */
 body.dark-mode label {
   color: black;
 }
-
