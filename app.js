@@ -289,9 +289,9 @@ let selectedHabits = new Set();
 
 // Predefined color palette for habits
 const habitColors = [
-  "#4CAF50", "#2196F3", "#FF9800", "#9C27B0", "#E91E63", "#3F51B5", "#009688", "#FFC107"
+  "#4CAF50", "#2196F3", "#FF9800", "#9C27B0", "#E91E63", "#3F51B5", "#009688", "#FFC107" // Distinct colors for different habits so they would be easily distinguishable in the calendar view
 ];
-const habitColorMap = {}; // will assign a unique color to each habit
+const habitColorMap = {}; // will assign a unique color to each habit randomly from the palette
 
 /* ---------------------------
    Load habit data

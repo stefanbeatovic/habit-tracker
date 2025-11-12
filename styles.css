@@ -1,9 +1,9 @@
 :root{ /* Root selector for global variables */
-  --brand-1:#019dd5; /* Primary blue colour */
-  --brand-2:#00bfff; /* Lighter blue */
+  --brand-1:orange; /* Primary blue colour */
+  --brand-2:#f2ff00; /* Lighter blue */
   --ink:#0b3b58; /* Dark text */
   --muted:#66788a; /* Light text */
-  --ring:#b3e6ff; /* Focus outline */
+  --ring:#e1ff00; /* Focus outline */
 }
 *{box-sizing:border-box} /* All elements include padding/border in width/height */
 html,body{height:100%} /* Full height for layout */
