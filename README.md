@@ -157,16 +157,18 @@ Breakdown:
 ### Reflection
 
 Building this Habit Tracker was an insightful experience that strengthened my understanding of DOM manipulation, state management, and localStorage. 
-Initially, the provided code offered a simple weekly habit view, which was functional but limited. My goal was to enhance usability and visualization 
+Initially, the provided code offered a simple weekly habit view, which was functional but limited a bit. My goal was to enhance usability and visualization 
 without breaking the original structure.
 
 The most challenging part was implementing the calendar view with month navigation and habit filtering. It required careful handling of dates, dynamic 
-rendering, and mapping habits to specific days. I also introduced color-coded indicators for habits, which improved clarity in the calendar.
+rendering, and mapping habits to specific days. I also introduced color-coded indicators for habits, which improved clarity in the calendar. There was also a 
+need to specify the localStorage key with which the calendar habit filter was able to fetch earlier inserted habits and show them in the calendar. 
 
 Adding dark mode was another interesting task. It involved toggling CSS classes and ensuring that all UI elements adapted correctly, including buttons, 
 text, and calendar cells. Persisting the theme choice using localStorage made the feature user-friendly.
 
-Finally, I focused on data management by enabling export/import functionality and reset options. These additions make the app practical for long-term use.
-
 Overall, this project taught me how to progressively enhance an existing codebase, maintain clean structure, and implement interactive features that improve
-user experience. It reinforced the importance of planning UI changes and writing reusable, maintainable JavaScript code.
+user experience. It reinforced the importance of planning UI changes and writing reusable, maintainable JavaScript code. It was definately something new that I
+have done. It was interesting and I hope there wil lbe more project like this in the future our studies. 
+
+Thank you. 
