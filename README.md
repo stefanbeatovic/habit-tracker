@@ -14,6 +14,8 @@ Default Code Provided**
 - Calculate streaks.
 - Data persistence using `localStorage`.
 - Basic UI with HTML, CSS, and JavaScript.
+- Reset all data if so desire
+
 
 My Enhancements**
 - **Calendar View with Month Navigation**  
@@ -26,6 +28,18 @@ My Enhancements**
   Modern design with responsive layout and hover effects.
 - **Data Management Tools**  
   Export/Import habits as JSON and reset all data.
+
+habit-tracker/
+├── index.html             # Main HTML file
+│   └──  styles.css        # CSS styles
+│   └── app.js             # Main JavaScript file
+├── screenshots/
+│    ├── Adding functions to .js file.png       # Going through .js file and editing it
+│    ├── Commiting to GitHub.png                # Commiting to Git repository often
+│    ├── Doing the .css file.png                # Doing the syling for the page
+│    ├── Habit Tracker.png                      # Example of the functional page
+│    ├── Starting with html code.png            # Ready code that was provided for us ready for work
+└── README.md              # Project documentation
 
 ---
 
@@ -41,7 +55,8 @@ git clone https://github.com/stefanbeatovic/habit-tracker
 - See console output by opening browser developer tools to verify if errors. Shortcuts for Windows/Linux: Press F12 or Ctrl + Shift + I. Shortcuts for Mac: Press Cmd + Opt + I
 - Enjoy using the site, view demo video for explanation on how it works.
 
-Screenshots:
+
+Screenshots are found in the separate folder of the process. 
 
 
 📝 Reflection (200–300 words)
