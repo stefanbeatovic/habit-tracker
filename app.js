@@ -273,3 +273,223 @@ document.getElementById("reset-all").addEventListener("click", () => {
 
 // Start the app on page load
 render();
+
+/* ===========================
+   Calendar View + Habit Colors + Dark Mode Toggle
+=========================== */
+
+const calendarGrid = document.getElementById("calendar-grid");
+const monthYearDisplay = document.getElementById("calendar-month-year");
+const prevMonthBtn = document.getElementById("prev-month");
+const nextMonthBtn = document.getElementById("next-month");
+const habitFilterContainer = document.getElementById("habit-filter");
+
+let currentDate = new Date();
+let selectedHabits = new Set();
+
+// Predefined color palette for habits
+const habitColors = [
+  "#4CAF50", "#2196F3", "#FF9800", "#9C27B0", "#E91E63", "#3F51B5", "#009688", "#FFC107"
+];
+const habitColorMap = {}; // will assign a unique color to each habit
+
+/* ---------------------------
+   Load habit data
+--------------------------- */
+function loadHabitData() {
+  const state = JSON.parse(localStorage.getItem("habitTrackerState") || "{}");
+
+  if (!state.habits || !Array.isArray(state.habits)) return [];
+
+  const result = [];
+
+  state.habits.forEach(habit => {
+    if (habit.log && typeof habit.log === "object") {
+      Object.entries(habit.log).forEach(([date, completed]) => {
+        if (completed === true) {
+          result.push({ habit: habit.name, date });
+        }
+      });
+    }
+  });
+
+  return result;
+}
+
+/* ---------------------------
+   Get all unique habits and assign colors
+--------------------------- */
+function getAllHabits(data) {
+  const habits = new Set(data.map(entry => entry.habit));
+  const all = Array.from(habits);
+  all.forEach((habit, i) => {
+    if (!habitColorMap[habit]) {
+      habitColorMap[habit] = habitColors[i % habitColors.length];
+    }
+  });
+  return all;
+}
+
+/* ---------------------------
+   Render habit filter checkboxes
+--------------------------- */
+function renderHabitFilter() {
+  const data = loadHabitData();
+  const habits = getAllHabits(data);
+  habitFilterContainer.innerHTML = "";
+
+  if (!habits.length) {
+    habitFilterContainer.innerHTML = "<p>No habits found yet. Add or complete some habits to see them here.</p>";
+    return;
+  }
+
+  habits.forEach(habit => {
+    const label = document.createElement("label");
+    label.style.display = "inline-flex";
+    label.style.alignItems = "center";
+    label.style.gap = "5px";
+    label.style.marginRight = "12px";
+
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.value = habit;
+
+    const colorDot = document.createElement("span");
+    colorDot.style.display = "inline-block";
+    colorDot.style.width = "12px";
+    colorDot.style.height = "12px";
+    colorDot.style.borderRadius = "50%";
+    colorDot.style.backgroundColor = habitColorMap[habit];
+
+    checkbox.addEventListener("change", (e) => {
+      if (e.target.checked) {
+        selectedHabits.add(habit);
+      } else {
+        selectedHabits.delete(habit);
+      }
+      renderCalendar();
+    });
+
+    label.appendChild(checkbox);
+    label.appendChild(colorDot);
+    label.append(habit);
+    habitFilterContainer.appendChild(label);
+  });
+}
+
+/* ---------------------------
+   Render calendar
+--------------------------- */
+function renderCalendar() {
+  const year = currentDate.getFullYear();
+  const month = currentDate.getMonth();
+
+  const firstDay = new Date(year, month, 1);
+  const lastDay = new Date(year, month + 1, 0);
+  const prevLastDay = new Date(year, month, 0);
+
+  const prevDays = firstDay.getDay();
+  const totalDays = lastDay.getDate();
+  const nextDays = 6 - lastDay.getDay();
+
+  monthYearDisplay.textContent = currentDate.toLocaleString("default", {
+    month: "long",
+    year: "numeric"
+  });
+
+  calendarGrid.innerHTML = "";
+
+  const habitCompletions = loadHabitData();
+
+  const filtered = selectedHabits.size > 0
+    ? habitCompletions.filter(entry => selectedHabits.has(entry.habit))
+    : habitCompletions;
+
+  const dayMap = {};
+  filtered.forEach(entry => {
+    if (!dayMap[entry.date]) dayMap[entry.date] = [];
+    dayMap[entry.date].push(entry.habit);
+  });
+
+  // Helper to build a day cell
+  const makeDay = (dayNum, isOtherMonth = false) => {
+    const day = document.createElement("div");
+    day.classList.add("calendar-day");
+    if (isOtherMonth) day.classList.add("other-month");
+
+    const fullDate = `${year}-${String(month + 1).padStart(2, "0")}-${String(dayNum).padStart(2, "0")}`;
+    const habitsOnDay = dayMap[fullDate];
+
+    day.textContent = dayNum;
+
+    if (habitsOnDay) {
+      habitsOnDay.forEach(habit => {
+        const colorDot = document.createElement("span");
+        colorDot.style.display = "inline-block";
+        colorDot.style.width = "8px";
+        colorDot.style.height = "8px";
+        colorDot.style.borderRadius = "50%";
+        colorDot.style.marginLeft = "3px";
+        colorDot.style.backgroundColor = habitColorMap[habit];
+        day.appendChild(colorDot);
+      });
+    }
+
+    calendarGrid.appendChild(day);
+  };
+
+  // Previous month days
+  for (let x = prevDays; x > 0; x--) {
+    makeDay(prevLastDay.getDate() - x + 1, true);
+  }
+
+  // Current month days
+  for (let i = 1; i <= totalDays; i++) {
+    makeDay(i);
+  }
+
+  // Next month days
+  for (let j = 1; j <= nextDays; j++) {
+    makeDay(j, true);
+  }
+}
+
+/* ---------------------------
+   Month navigation
+--------------------------- */
+prevMonthBtn.addEventListener("click", () => {
+  currentDate.setMonth(currentDate.getMonth() - 1);
+  renderCalendar();
+});
+
+nextMonthBtn.addEventListener("click", () => {
+  currentDate.setMonth(currentDate.getMonth() + 1);
+  renderCalendar();
+});
+
+/* ---------------------------
+   Initialize
+--------------------------- */
+renderHabitFilter();
+renderCalendar();
+
+/* ====================================================
+   DARK MODE TOGGLE BUTTON
+==================================================== */
+const darkModeBtn = document.createElement("button");
+darkModeBtn.textContent = "🌙";
+darkModeBtn.id = "dark-mode-toggle";
+document.body.appendChild(darkModeBtn);
+
+// Toggle logic
+darkModeBtn.addEventListener("click", () => {
+  document.body.classList.toggle("dark-mode");
+  darkModeBtn.textContent = document.body.classList.contains("dark-mode") ? "☀️" : "🌙";
+  localStorage.setItem("darkMode", document.body.classList.contains("dark-mode"));
+});
+
+// Remember mode
+if (localStorage.getItem("darkMode") === "true") {
+  document.body.classList.add("dark-mode");
+  darkModeBtn.textContent = "☀️";
+}

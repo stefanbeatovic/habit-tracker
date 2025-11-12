@@ -16,3 +16,144 @@ body{
 }
 button:focus, input:focus{outline:3px solid var(--ring); outline-offset:2px} /* Blue focus ring for keyboard users */
 /* Additional: Focus styles ensure accessibility for keyboard navigation */
+
+/* Calendar View Styles */
+
+.calendar-container {
+  margin-top: 0rem;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  padding: 1.5rem;
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.calendar-header h3 {
+  font-size: 1.25rem;
+  color: #333;
+}
+
+.calendar-btn {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.calendar-btn:hover {
+  background-color: #45a049;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.5rem;
+  text-align: center;
+}
+
+.calendar-day {
+  background-color: #f9f9f9;
+  padding: 0.75rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  cursor: default;
+  transition: background-color 0.3s ease;
+}
+
+.calendar-day.completed {
+  background-color: #a5d6a7;
+  color: #2e7d32;
+  font-weight: bold;
+}
+
+.calendar-day.other-month {
+  opacity: 0.4;
+}
+
+/* ===========================
+   Habit Filter Section
+=========================== */
+
+.habit-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.habit-filter label {
+  display: flex;
+  align-items: center;
+  background-color: #f2f2f2;
+  border-radius: 6px;
+  padding: 0.4rem 0.8rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.habit-filter input[type="checkbox"] {
+  margin-right: 0.4rem;
+}
+
+.habit-filter label:hover {
+  background-color: #e6e6e6;
+}
+
+/* ===========================
+   Dark Mode Toggle Button
+=========================== */
+#dark-mode-toggle {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #333;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  font-size: 20px;
+  cursor: pointer;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+  transition: background 0.3s, transform 0.2s;
+}
+
+#dark-mode-toggle:hover {
+  background: #555;
+  transform: scale(1.1);
+}
+
+/* ===========================
+   Dark Mode Theme
+=========================== */
+body.dark-mode {
+  background-color: #121212;
+  color: #e0e0e0; /* Letter colors */
+}
+
+body.dark-mode .calendar-day {
+  background-color: #1e1e1e;
+  border-color: #333;
+}
+
+body.dark-mode .calendar-day.other-month {
+  opacity: 0.5;
+}
+
+body.dark-mode #calendar-month-year {
+  color: black;
+}
+
+body.dark-mode label {
+  color: black;
+}
+

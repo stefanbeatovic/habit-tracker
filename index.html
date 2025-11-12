@@ -53,6 +53,17 @@
         <div id="rows"></div> <!-- JS inserts habit rows here -->
       </div>
     </section>
+    <section id="calendar-section" class="calendar-container"> <!-- Calendar View Section -->
+      <h2>Habit Calendar Overview</h2>
+      <div class="calendar-header">
+        <button id="prev-month" class="calendar-btn">&lt;</button>
+        <h3 id="calendar-month-year"></h3>
+        <button id="next-month" class="calendar-btn">&gt;</button>
+      </div>
+      <!-- New Habit Filter Section -->
+      <div id="habit-filter" class="habit-filter"></div>
+      <div class="calendar-grid" id="calendar-grid"></div>
+    </section>
     <section style="background:#fff;border-radius:12px;padding:18px;margin:12px 0;box-shadow:0 1px 2px rgba(0,0,0,.04),0 4px 12px rgba(0,0,0,.04);" aria-labelledby="manage-title"> <!-- Data management -->
       <h2 id="manage-title" style="margin:0 0 8px;color:#0b3b58;">Manage data</h2>
       <div style="display:flex;gap:8px;flex-wrap:wrap;">
