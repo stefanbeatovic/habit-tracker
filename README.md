@@ -3,7 +3,8 @@
 ## Overview
 
 This project is part of the **Dynamic Web Applications with JavaScript** course. It is a **Habit Tracker** that helps users monitor daily habits, visualize progress, 
-and manage data locally using `localStorage`. The app runs entirely in the browser—no server required.
+and manage data locally using `localStorage`. The app runs entirely in the browser—no server required. The students were provided with a default code which we edited
+and modified to our vision, trying to understand the code and the wat to edit the code as well as possible. 
 
 ---
 
